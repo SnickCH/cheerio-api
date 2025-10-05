@@ -25,10 +25,12 @@ Be Aware that I will not update the existing images. This is for my own usage - 
 ```
 snickch/cheerio-api:1.0.0-rc12   - Cheerio 1.0.0-RC12, with Express 4.18.2 (FROM Node20-alpine)
 snickch/cheerio-api:1.1.2        - Cheerio 1.1.2, with Express 5.1.0 (FROM Node20-alpine)
-snickch/cheerio-api:latest       - Whatever the latest version of my image is (not the latest version of Cheerio - keep that in mind when using it)
+snickch/cheerio-api:latest       - Cheerio 1.1.2, with Express 5.1.0 (FROM Node20-alpine)
 
 
 ```
+Don't use the lastest ```tag```. I just added it so people don't open an issue becaseu it "doesn't work". I will probably not update anything on the latest tag - because I don't need it.
+
 ### Architecture
 - ARM64 ->tested
 - AMD64 ->not tested
