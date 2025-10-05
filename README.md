@@ -108,7 +108,7 @@ services:
     image: snickch/cheerio-api:1.1.2 
     container_name: cheerio-api
     ports:
-      - "4444:3000" # Externe IPs können über Port 4444 zugreifen
+      - "4444:3000" # Externe IPs can access the container - not needed for N8N etc (directly on port 3000 in the same network)
     restart: unless-stopped
 ```
 
