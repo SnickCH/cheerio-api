@@ -21,11 +21,15 @@ This project provides a simple REST API built with Node.js, Express, and Cheerio
 - if you dont want to build your own local image, you can use the following one
 Be Aware that I will not update the existing images. This is for my own usage - you are welcome to use it too.
 
+### Tages
 ```
 snickch/cheerio-api:1.0.0-rc12   - Cheerio 1.0.0-RC12, with Express 4.18.2 (FROM Node20-alpine)
 snickch/cheerio-api:1.1.2        - CHeerio 1.1.2, with Express 5.1.0 (FROM Node20-alpine)
 
 ```
+### Architecture
+- ARM64 ->tested
+- AMD64 ->not tested
 
 ## Security
 - There is no security for any endpoint. It is designed to be used in your own environment only (for example: in the same network as N8N)
