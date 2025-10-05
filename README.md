@@ -24,7 +24,9 @@ Be Aware that I will not update the existing images. This is for my own usage - 
 ### Tages
 ```
 snickch/cheerio-api:1.0.0-rc12   - Cheerio 1.0.0-RC12, with Express 4.18.2 (FROM Node20-alpine)
-snickch/cheerio-api:1.1.2        - CHeerio 1.1.2, with Express 5.1.0 (FROM Node20-alpine)
+snickch/cheerio-api:1.1.2        - Cheerio 1.1.2, with Express 5.1.0 (FROM Node20-alpine)
+snickch/cheerio-api:latest       - Whatever the latest version of my image is (not the latest version of Cheerio - keep that in mind when using it)
+
 
 ```
 ### Architecture
@@ -108,7 +110,7 @@ services:
     image: snickch/cheerio-api:1.1.2 
     container_name: cheerio-api
     ports:
-      - "4444:3000" # Externe IPs can access the container - not needed for N8N etc (directly on port 3000 in the same network)
+      - "4444:3000" # External IPs can access the container - not needed for N8N etc (directly on port 3000 in the same network)
     restart: unless-stopped
 ```
 
