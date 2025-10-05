@@ -1,0 +1,14 @@
+{
+  "name": "cheerio-api",
+  "version": "1.0.0",
+  "description": "Parametrisierbare REST API für cheerio",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "express": "^4.18.2"
+  }
+}
