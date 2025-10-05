@@ -88,11 +88,28 @@ Content-Type: application/json
 
 ## Running with Docker
 
+### Local build
 Build and run the container:
 
 ```bash
 docker build -t cheerio-api .
 docker run --rm -p 4444:3000 cheerio-api
+```
+
+### Premaid images
+Please check the section "public images"
+
+### DockerCompose example (with premaid image)
+```
+version: '3.8'
+
+services:
+  cheerio-api:
+    image: snickch/cheerio-api:1.1.2 
+    container_name: cheerio-api
+    ports:
+      - "4444:3000" # Externe IPs können über Port 4444 zugreifen
+    restart: unless-stopped
 ```
 
 The API will be available at `http://localhost:4444`.
