@@ -12,8 +12,9 @@ This project provides a simple REST API built with Node.js, Express, and Cheerio
 ## Features
 
 - Built on Node.js and Express
-- Uses Cheerio for server-side HTML parsing
-- REST interface for easy integration with tools like n8n
+- Uses Cheerio for server-side HTML parsing.
+- Supports both CSS selector-based parsing and custom script execution via secure vm2 sandbox
+- Provides a REST interface for easy integration with automation tools such as n8n
 - Docker-ready for isolated deployments
 
   
@@ -23,13 +24,12 @@ Be Aware that I will not update the existing images. This is for my own usage - 
 
 ### Tages
 ```
-snickch/cheerio-api:1.0.0-rc12   - Cheerio 1.0.0-RC12, with Express 4.18.2 (FROM Node20-alpine)
-snickch/cheerio-api:1.1.2        - Cheerio 1.1.2, with Express 5.1.0 (FROM Node20-alpine)
-snickch/cheerio-api:latest       - Cheerio 1.1.2, with Express 5.1.0 (FROM Node20-alpine)
-
+snickch/cheerio-api:1.1.2        - Cheerio 1.1.2, with Express 5.1.0 (FROM Node20-alpine), vm2 "latest"
+snickch/cheerio-api:latest       - Cheerio "latest", with Express "latest" (FROM Node20-alpine), vm2 "latest"
 
 ```
-Don't use the lastest ```tag```. I just added it so people don't open an issue becaseu it "doesn't work". I will probably not update anything on the latest tag - because I don't need it.
+1.1.2 - will not be renwed
+latest - The latest tag does not update automatically – it is only used when a new version is required by the workflow. It mainly ensures that the container works correctly and avoids issues caused by missing tags.
 
 ### Architecture
 - ARM64 ->tested
@@ -39,6 +39,7 @@ Don't use the lastest ```tag```. I just added it so people don't open an issue b
 - There is no security for any endpoint. It is designed to be used in your own environment only (for example: in the same network as N8N)
 - The image will not be updated. They work for me and I don't want anything to change.
 - New images with new versions may be created. If you wish to have a new version, feel free to open an issue (speficy exactly which version of Cheerio and Express you want to have, and why: Issues with the existing images or some new features that you want to use?)
+- Minimum security for scripts: Custom scripts run in a sandbox environment (vm2). The main purpose is to mitigate script errors, not to protect against security breaches — keep that in mind.
 
 ## Endpoints
 
@@ -63,12 +64,13 @@ Hallo von der Cheerio API!
 
 ---
 
-### 2. Parsing Endpoint `/parse`
+### 2. Parsing Endpoint `/parse` - Selector based
 
 Parses provided HTML using a CSS selector.  
 You send raw HTML and a selector in the body, and the API responds with the extracted data.
 
 **Request:**
+
 ```
 POST /parse
 Content-Type: application/json
@@ -87,6 +89,37 @@ Content-Type: application/json
   "results": ["Paragraph 1", "Paragraph 2"]
 }
 ```
+
+### 3. Parsing Endpoint `/parse` - custom script execution
+
+Parses provided HTML using a CSS selector.  
+You send raw HTML and a selector in the body, and the API responds with the extracted data.
+
+**Request:**
+
+```
+POST /parse
+Content-Type: application/json
+
+{
+  "html": "<html><body><div class='product'><span class='price'>CHF 19.90</span></div></body></html>",
+  "script": "$('div.product').map((i, el) => ({ price: $(el).find('.price').text() })).get()"
+}
+
+```
+
+**Response:**
+```json
+{
+    "result": [
+        {
+            "price": "CHF 19.90"
+        }
+    ]
+}
+```
+
+
 
 ---
 
@@ -136,6 +169,8 @@ This confirms the container is running and responding.
 
 ### B) Using `curl` to Test `/parse`
 
+
+Selector
 ```bash
 curl -X POST http://localhost:4444/parse \
   -H "Content-Type: application/json" \
@@ -154,7 +189,27 @@ Expected response:
 }
 ```
 
+Custom script
+```bash
+curl -X POST http://localhost:3000/parse \
+  -H "Content-Type: application/json" \
+  -d '{"html":"<html><body><div class=\"product\"><span class=\"price\">CHF 19.90</span></div></body></html>","script":"$(\"div.product\").map((i, el) => ({price: $(el).find(\".price\").text()})).get()"}'
+
+```
+Expected response:
+```json
+{
+    "result": [
+        {
+            "price": "CHF 19.90"
+        }
+    ]
+}
+```
 ---
+
+
+
 
 ### C) Example for an n8n HTTP Request Node
 
