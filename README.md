@@ -24,8 +24,8 @@ Be Aware that I will not update the existing images. This is for my own usage - 
 
 ### Tages
 ```
-snickch/cheerio-api:1.1.2        - Cheerio 1.1.2, with Express 5.1.0 (FROM Node20-alpine), vm2 "latest"
-snickch/cheerio-api:latest       - Cheerio "latest", with Express "latest" (FROM Node20-alpine), vm2 "latest"
+snickch/cheerio-api:1.1.2        - Cheerio 1.1.2, with Express 5.1.0 (FROM Node20-alpine), vm2 "latest" ->only a quick test
+snickch/cheerio-api:latest       - Cheerio "latest", with Express "latest" (FROM Node20-alpine), vm2 "latest" ->in work in my environment
 
 ```
 1.1.2 - will not be renwed
